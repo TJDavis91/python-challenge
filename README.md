@@ -2,6 +2,8 @@
 Here we go....!
 ## Sources
 https://github.com/joathanner/Python-Project.git
+https://github.com/TobiAdel/python-challenge.git
+
 Also a tutoring session to help with figuring out how to make the correct calculations
 
 Background
