@@ -1,6 +1,7 @@
 # python-challenge
 Here we go....!
-https://github.com/TobiAdel/python-challenge.git (Source of help)
+## Sources
+https://github.com/joathanner/Python-Project.git
 Also a tutoring session to help with figuring out how to make the correct calculations
 
 Background
