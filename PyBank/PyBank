@@ -1,0 +1,91 @@
+import os
+import csv
+import pandas as pd
+
+total_months = 0
+net_total = 0
+change = 0
+previous_change = 0
+current_change = 0
+average_change = 0
+change_list = []     # storing the value of P/L change over each iteration
+month_list = []      # storing which month it is in the month_list over each iteration
+
+
+
+# read in Budget data csv file
+
+csvpath = os.path.join("budget_data.csv")
+
+with open(csvpath) as csvfile:
+    csvreader = csv.reader(csvfile, delimiter = ",")
+    # Skip header row
+    csv_headers = next(csvreader)
+
+
+    # iterate through the file and collect the data   
+   
+    
+    for row in csvreader: 
+        # Find total number of months
+        total_months = total_months + 1
+        
+              
+        # Find net total P/L
+        net_total = net_total + int(row[1])  # Value in the cell on the previous interation
+        
+        # Store ("append") date column to a list called "month_list"
+        month_list.append(row[0])
+        
+        # take current_change and subtract from previous_change gives us the value of "change"
+        current_change = int(row[1])
+        change = current_change - previous_change
+        
+        # Store ("append") the value in change_list
+        change_list.append(change)
+        
+        # assign new value to previous-change
+        previous_change = current_change
+        
+        # Find the greatest increase in profits
+        greatest_increase = max(change_list)
+
+        
+         # Find the greatest decrease in profits
+        greatest_decrease = min(change_list)
+      
+
+        
+    # get rid of first value in change list after the for loop is complete so the average change value will be correct.
+    # the first value in change list is not needed to calculate the "average change" because no change had occured at that point
+    # Find the average change of P/L over the period
+    del change_list[0]
+    average_change = round(sum(change_list) / len(change_list),2)
+    
+    
+
+# Output the results to a file called Budget Analysis
+csvoutput = os.path.join("budget_analysis.txt")
+
+with open(csvoutput, 'w') as file:
+    file.write(f"Financial Analysis \n")
+    file.write("-------------------------------- \n")
+    file.write(f"Total Months: {total_months} \n")
+    file.write(f"Total: ${net_total} \n")
+    file.write(f"Average Change: ${average_change} \n")
+    file.write(f"Greatest Increase in Profits: {month_list[change_list.index(max(change_list))]} ${greatest_increase} \n")
+    file.write(f"Greatest Decrease in Profits: {month_list[change_list.index(min(change_list))]} ${greatest_decrease} \n")
+
+
+
+
+# Print results to console
+
+print(f"Financial Analysis")
+print(f"----------------------------")
+print(f"Total Months: {total_months}")
+print(f"Total: ${net_total}")
+print(f"Average Change: ${average_change}")
+print(f"Greatest Increase in Profits: {month_list[change_list.index(max(change_list))]} ${greatest_increase}")
+print(f"Greatest Decrease in Profits: {month_list[change_list.index(min(change_list))]} ${greatest_decrease}")
+
